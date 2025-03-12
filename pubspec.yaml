@@ -1,0 +1,47 @@
+name: honey
+description: "A new Flutter project."
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.7.0
+#========================================
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Firebase dependencies
+  firebase_core: ^2.32.0 # Firebase Core
+  firebase_auth: ^4.16.0 # Firebase Authentication
+  cloud_firestore: ^4.17.5 # Firestore for database
+  shared_preferences: ^2.5.2 # For storing login status
+
+  # UI and utility dependencies
+  fluttertoast: ^8.2.12 # For showing toast messages
+  qr_code_scanner: ^1.0.1 # For QR code scanning
+  google_fonts: ^6.2.1 # Optional: For custom fonts
+  provider: ^6.1.2 # Optional: For state management
+  firebase_auth_web: ^5.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0 # For linting and code quality
+
+flutter:
+  uses-material-design: true
+
+  assets:
+   # - assets/logo.png # Add your logo image here
+    - assets/images/ # Add more assets if needed
+
+  # Optional: Add custom fonts
+  # fonts:
+  #   - family: CustomFont
+  #     fonts:
+  #       - asset: assets/fonts/CustomFont-Regular.ttf
+  #       - asset: assets/fonts/CustomFont-Bold.ttf
+  #         weight: 700
