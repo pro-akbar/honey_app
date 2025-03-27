@@ -1,20 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:honey/widgets/bottom_navbar.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  HomeScreenState createState() => HomeScreenState(); // Make it public
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
-class HomeScreenState extends State<HomeScreen> { // Remove underscore
-  late final FirebaseAuth _auth;
+class _HomeScreenState extends State<HomeScreen> {
+  int _selectedIndex = 0;
 
-  @override
-  void initState() {
-    super.initState();
-    _auth = FirebaseAuth.instance;
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+
+    switch (index) {
+      case 0:
+        // Home screen is already active
+        break;
+      case 1:
+        Navigator.pushNamed(context, '/inventory');
+        break;
+      case 2:
+        Navigator.pushNamed(context, '/laws');
+        break;
+      case 3:
+        Navigator.pushNamed(context, '/qrscanner');
+        break;
+      case 4:
+        Navigator.pushNamed(context, '/weather');
+        break;
+    }
   }
 
   @override
@@ -22,20 +40,17 @@ class HomeScreenState extends State<HomeScreen> { // Remove underscore
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: () async {
-              await _auth.signOut();
-              if (mounted) {
-                Navigator.pushReplacementNamed(context, '/login');
-              }
-            },
-          ),
-        ],
+        automaticallyImplyLeading: false,
       ),
       body: const Center(
-        child: Text('Welcome to Honey!'),
+        child: Text(
+          'Welcome to the Home Screen!',
+          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        ),
+      ),
+      bottomNavigationBar: BottomNavBar(
+        selectedIndex: _selectedIndex,
+        onItemTapped: _onItemTapped,
       ),
     );
   }

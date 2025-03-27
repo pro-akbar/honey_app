@@ -1,66 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegistrationScreen extends StatefulWidget {
+  const RegistrationScreen({super.key});
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _RegistrationScreenState createState() => _RegistrationScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegistrationScreenState extends State<RegistrationScreen> {
   final _auth = FirebaseAuth.instance;
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _usernameController = TextEditingController();
   bool _obscurePassword = true;
 
-  void _login() async {
+  void _register() async {
     try {
       final email = _emailController.text.trim();
       final password = _passwordController.text.trim();
+      final username = _usernameController.text.trim();
 
-      if (email == 'admin@gmail.com' && password == 'admin123') {
-        // Navigate to Admin Dashboard
-        Navigator.pushReplacementNamed(context, '/admin');
-      } else {
-        final userCredential = await _auth.signInWithEmailAndPassword(
-          email: email,
-          password: password,
+      if (username.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Please enter a username')),
         );
+        return;
+      }
 
-        if (userCredential.user != null) {
-          // Navigate to Home Screen with a welcome message
-          Navigator.pushReplacementNamed(
-            context,
-            '/home',
-            arguments: email, // Pass the email (or username if available)
-          );
-        }
+      // Create user with email and password
+      final userCredential = await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      if (userCredential.user != null) {
+        // Navigate to Home Screen with a welcome message
+        Navigator.pushReplacementNamed(
+          context,
+          '/home',
+          arguments: username, // Pass the username
+        );
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Login failed: $e')),
-      );
-    }
-  }
-
-  void _forgotPassword() async {
-    final email = _emailController.text.trim();
-    if (email.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please enter your email address')),
-      );
-      return;
-    }
-
-    try {
-      await _auth.sendPasswordResetEmail(email: email);
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Password reset email sent')),
-      );
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to send reset email: $e')),
+        SnackBar(content: Text('Registration failed: $e')),
       );
     }
   }
@@ -83,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text(
-                  'Welcome Back!',
+                  'Create Account',
                   style: TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
@@ -100,6 +84,17 @@ class _LoginScreenState extends State<LoginScreen> {
                     padding: const EdgeInsets.all(20.0),
                     child: Column(
                       children: [
+                        TextField(
+                          controller: _usernameController,
+                          decoration: InputDecoration(
+                            labelText: 'Username',
+                            prefixIcon: const Icon(Icons.person, color: Colors.brown),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 16),
                         TextField(
                           controller: _emailController,
                           decoration: InputDecoration(
@@ -135,7 +130,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         const SizedBox(height: 20),
                         ElevatedButton(
-                          onPressed: _login,
+                          onPressed: _register,
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.brown.shade800,
                             padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
@@ -144,23 +139,16 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           child: const Text(
-                            'Login',
+                            'Register',
                             style: TextStyle(fontSize: 18),
                           ),
                         ),
                         TextButton(
-                          onPressed: _forgotPassword,
-                          child: const Text(
-                            'Forgot Password?',
-                            style: TextStyle(color: Colors.brown),
-                          ),
-                        ),
-                        TextButton(
                           onPressed: () {
-                            Navigator.pushNamed(context, '/signup');
+                            Navigator.pushNamed(context, '/login');
                           },
                           child: const Text(
-                            'Don\'t have an account? Sign Up',
+                            'Already have an account? Login',
                             style: TextStyle(color: Colors.brown),
                           ),
                         ),

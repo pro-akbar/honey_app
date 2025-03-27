@@ -34,6 +34,13 @@ class _AdminDashboardState extends State<AdminDashboard> {
           children: [
             ElevatedButton(
               onPressed: () {
+                Navigator.pushNamed(context, '/inventory');
+              },
+              child: const Text('View Inventory'),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
                 // Navigate to manage beekeepers screen
               },
               child: const Text('Manage Beekeepers'),

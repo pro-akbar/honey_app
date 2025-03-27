@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart'; // Firebase configuration file
-import 'screens/splash_screen.dart'; // Splash screen
-import 'screens/login_screen.dart'; // Login screen
-import 'screens/registration_screen.dart'; // Registration screen
-import 'screens/home_screen.dart'; // Home screen
-import 'screens/admin_dashboard.dart'; // Admin dashboard
-import 'screens/beekeeper_dashboard.dart'; // Beekeeper dashboard
-import 'screens/inventory_screen.dart'; // Inventory screen
-import 'screens/qr_code_scanner.dart'; // QR Scanner screen
-import 'screens/laws_guidelines_screen.dart'; // Laws and Guidelines screen
+import 'firebase_options.dart';
+
+import 'screens/admin_dashboard.dart';
+import 'screens/beekeeper_dashboard.dart';
+import 'screens/add_batch_screen.dart';
+import 'screens/edit_batch_screen.dart';
+import 'screens/batch_details_screen.dart';
+import 'screens/splash_screen.dart';
+
+import 'screens/login_screen.dart';
+import 'screens/signup_screen.dart';
+import 'screens/home_screen.dart';
+import 'screens/inventory_screen.dart';
+import 'screens/laws_guidelines_screen.dart';
+import 'screens/qr_code_scanner.dart';
+import 'screens/weather_status_screen.dart';
 
 void main() async {
-  // Ensure Flutter is initialized
   WidgetsFlutterBinding.ensureInitialized();
-
-  // Initialize Firebase
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
-  // Run the app
   runApp(const MyApp());
 }
 
@@ -31,47 +32,100 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Honey App',
+      debugShowCheckedModeBanner: false, // Remove debug banner
       theme: ThemeData(
-        primarySwatch: Colors.amber, // Amber as the primary color
-        scaffoldBackgroundColor: Colors.amber[50], // Light amber background
+        // Primary and secondary colors inspired by honey and bees
+        primaryColor: const Color(0xFFFFC107), // Bright honey yellow
+        colorScheme: ColorScheme.fromSwatch(
+          primarySwatch: Colors.amber,
+          accentColor: const Color(0xFFFFA000), // Darker amber for accents
+        ),
+
+        // Scaffold background color (light and warm)
+        scaffoldBackgroundColor: const Color(0xFFFFF3E0), // Light honeycomb
+
+        // AppBar theme
         appBarTheme: AppBarTheme(
-          backgroundColor: Colors.amber[800], // Dark amber app bar
+          backgroundColor: const Color(0xFFFFC107), // Bright honey yellow
+          elevation: 4, // Shadow under the app bar
           titleTextStyle: const TextStyle(
             color: Colors.white,
-            fontSize: 20,
+            fontSize: 24,
             fontWeight: FontWeight.bold,
+            fontFamily: 'Lobster', // Custom font for a playful feel
+          ),
+          iconTheme: const IconThemeData(
+            color: Colors.white, // App bar icons color
           ),
         ),
+
+        // Text theme
+        textTheme: const TextTheme(
+          displayLarge: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Color(0xFF4E342E)), // Dark brown for headings
+          displayMedium: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Color(0xFF4E342E)),
+          displaySmall: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF4E342E)),
+          bodyLarge: TextStyle(fontSize: 18, color: Color(0xFF4E342E)), // Dark brown for body text
+          bodyMedium: TextStyle(fontSize: 16, color: Color(0xFF4E342E)),
+          bodySmall: TextStyle(fontSize: 14, color: Color(0xFF6D4C41)), // Lighter brown for small text
+        ),
+
+        // Button theme
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.amber[800], // Amber buttons
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            backgroundColor: const Color(0xFFFFA000), // Darker amber for buttons
+            foregroundColor: Colors.white,
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
             textStyle: const TextStyle(
-              color: Colors.white,
               fontSize: 16,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'Lobster', // Custom font for buttons
             ),
           ),
         ),
-        textButtonTheme: TextButtonThemeData(
-          style: TextButton.styleFrom(
-            foregroundColor: Colors.amber[800], // Amber text for text buttons
+
+        // Input decoration theme (for TextFields)
+        inputDecorationTheme: InputDecorationTheme(
+          filled: true,
+          fillColor: Colors.white,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide.none,
           ),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          hintStyle: TextStyle(color: Colors.grey[600]),
         ),
+
+        // Card theme
+        cardTheme: CardTheme(
+          elevation: 4,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          margin: const EdgeInsets.all(8),
+          color: Colors.white, // White cards with golden accents
+        ),
+
+        // Icon theme
+        iconTheme: const IconThemeData(
+          color: Color(0xFFFFC107), // Bright honey yellow for icons
+        ),
+
+        // Custom font for the entire app
+        fontFamily: 'Raleway', // A modern, elegant font
       ),
       initialRoute: '/',
       routes: {
         '/': (context) => const SplashScreen(),
         '/login': (context) => const LoginScreen(),
-        '/register': (context) => const RegistrationScreen(),
+        '/signup': (context) => const RegistrationScreen(),
         '/home': (context) => const HomeScreen(),
-        '/admin': (context) => const AdminDashboard(),
-        '/beekeeper': (context) => const BeekeeperDashboard(),
         '/inventory': (context) => const InventoryScreen(),
-        '/qrscanner': (context) => const QRScannerScreen(),
         '/laws': (context) => const LawsGuidelinesScreen(),
+        '/qrscanner': (context) => const QRScannerScreen(),
+        '/weather': (context) => const WeatherStatusScreen(),
       },
     );
   }

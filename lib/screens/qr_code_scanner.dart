@@ -5,20 +5,20 @@ class QRScannerScreen extends StatefulWidget {
   const QRScannerScreen({super.key});
 
   @override
-  QRScannerScreenState createState() => QRScannerScreenState(); // Make it public
+  QRScannerScreenState createState() => QRScannerScreenState();
 }
 
-class QRScannerScreenState extends State<QRScannerScreen> { // Remove underscore
+class QRScannerScreenState extends State<QRScannerScreen> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   QRViewController? controller;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.amber[50], // Light background
+      backgroundColor: Colors.amber[50],
       appBar: AppBar(
         title: const Text('QR Scanner', style: TextStyle(color: Colors.white)),
-        backgroundColor: Colors.amber[800], // Amber app bar
+        backgroundColor: Colors.amber[800],
       ),
       body: Column(
         children: [
@@ -37,7 +37,7 @@ class QRScannerScreenState extends State<QRScannerScreen> { // Remove underscore
                   // Handle QR code result
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.amber[800], // Amber button
+                  backgroundColor: Colors.amber[800],
                   padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),

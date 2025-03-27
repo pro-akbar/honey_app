@@ -34,14 +34,14 @@ class _BeekeeperDashboardState extends State<BeekeeperDashboard> {
           children: [
             ElevatedButton(
               onPressed: () {
-                // Navigate to view honey batches screen
+                Navigator.pushNamed(context, '/inventory');
               },
-              child: const Text('View Honey Batches'),
+              child: const Text('View Inventory'),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // Navigate to QR scanner screen
+                Navigator.pushNamed(context, '/qr');
               },
               child: const Text('Scan QR Code'),
             ),
