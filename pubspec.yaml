@@ -23,7 +23,7 @@ dependencies:
 
   # UI and utility dependencies
   fluttertoast: ^8.2.12 # For showing toast messages
-  qr_code_scanner: ^1.0.1 # For QR code scanning
+  # qr_code_scanner: ^1.0.1 # For QR code scanning
   google_fonts: ^6.2.1 # Optional: For custom fonts
   provider: ^6.1.2 # Optional: For state management
   firebase_auth_web: ^5.14.1
